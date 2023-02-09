@@ -1,1 +1,1 @@
-Sitemap: https://381f009f-7bc0-4d0b-b37b-f6735dd915b2.netlify.app/sitemap.xml
+Sitemap: https://quartopub.com/sites/doystudent/second_project/sitemap.xml
