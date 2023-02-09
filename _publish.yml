@@ -1,0 +1,4 @@
+- source: project
+  quarto-pub:
+    - id: 381f009f-7bc0-4d0b-b37b-f6735dd915b2
+      url: 'https://quartopub.com/sites/doystudent/second_project'
