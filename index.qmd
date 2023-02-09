@@ -1,5 +1,48 @@
 ---
-title: "Cool project"
+title: "Cool Mapping Project"
 ---
 
-This is my cool project
+```{r}
+library(tidyverse)
+library(tidycensus)
+library(tmap)
+hennepin_race <- get_decennial(
+  geography = "tract",
+  state = "MN",
+  county = "Hennepin",
+  variables = c(
+    Hispanic = "P2_002N",
+    White = "P2_005N",
+    Black = "P2_006N",
+    Native = "P2_007N",
+    Asian = "P2_008N"
+  ),
+  summary_var = "P2_001N",
+  year = 2020,
+  geometry = TRUE
+) |>
+  mutate(percent = 100 * (value / summary_value))
+```
+
+```{r}
+hennepin_dots <- hennepin_race %>%
+  as_dot_density(
+    value = "value",
+    values_per_dot = 100,
+    group = "variable"
+  )
+```
+
+```{r}
+background_tracts <- filter(hennepin_race, variable == "White")
+tm_shape(background_tracts) + 
+  tm_polygons(col = "white", 
+              border.col = "grey") + 
+  tm_shape(hennepin_dots) +
+  tm_dots(col = "variable", 
+          palette = "Set1",
+          size = 0.005, 
+          title = "1 dot = 100 people") + 
+  tm_layout(legend.outside = TRUE,
+            title = "Race/ethnicity,\n2020 US Census")
+```
